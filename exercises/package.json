@@ -34,5 +34,7 @@
     "url": "https://github.com/MostlyAdequate/mostly-adequate-guide/issues"
   },
   "homepage": "https://github.com/MostlyAdequate/mostly-adequate-guide",
-  "dependencies": {}
+  "dependencies": {
+    "ramda": "^0.25.0"
+  }
 }
