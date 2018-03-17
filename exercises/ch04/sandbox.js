@@ -1,21 +1,23 @@
-const curry = (fn, ...args) => {
-  if (args.length === fn.length) {
-    return fn(...args);
-  } else {
-    return (...moreArgs) => {
-      const newArgs = args.concat(moreArgs);
+// curry :: ((a, b, ...) -> c) -> a -> b -> ... -> c
+function curry(fn) {
+  const arity = fn.length;
 
-      return curry(fn, ...newArgs);
-    };
-  }
-};
+  return function $curry(...args) {
+    if (args.length < arity) {
+      return $curry.bind(null, ...args);
+    }
 
-let myFunc = (foo, bar, baz) => foo + bar + baz;
+    return fn.call(null, ...args);
+  };
+}
 
-let curried = curry(myFunc)("meow");
+const match = curry((what, s) => s.match(what));
+const replace = curry((what, replacement, s) => s.replace(what, replacement));
+const filter = curry((f, xs) => xs.filter(f));
+const map = curry((f, xs) => xs.map(f));
 
-let answer = curried("moo")("quack");
+const hasLetterR = match(/r/g);
 
-console.log(answer);
+output = filter(hasLetterR, ["rock and roll", "smooth jazz"]);
 
-//need to get a better grasp of whats' happening when using the spread operator in function arguments
+console.log(output);
